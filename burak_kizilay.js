@@ -248,7 +248,13 @@ function createProductCard(product, favorites) {
   }
 
   try {
-    products = await fetchProducts();
+    const storedProducts = localStorage.getItem("products");
+    if (JSON.parse(localStorage.getItem("products")) === null) {
+      products = JSON.parse(storedProducts);
+    } else {
+      products = await fetchProducts();
+      localStorage.setItem("products", JSON.stringify(products));
+    }
     updateCarouselView();
 
     nextButton.onclick = () => {
