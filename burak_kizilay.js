@@ -25,6 +25,7 @@ function createProductCard(product, favorites) {
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+      gap: 10px;
     `;
 
   const img = document.createElement("img");
@@ -86,10 +87,11 @@ function createProductCard(product, favorites) {
 
   const productName = document.createElement("p");
   productName.style.cssText = `
-    font-size: 14px;
+    font-size: 12px;
     color: black;
     margin: 0;
     text-align: start;
+    height: 60px;
   `;
 
   const brandSpan = document.createElement("span");
@@ -140,9 +142,16 @@ function createProductCard(product, favorites) {
 
   const price = document.createElement("p");
   price.textContent = `${product.price} TL`;
+  price.style.cssText = `
+    font-size: 16px;
+    color: #00a365;
+    font-weight: bold;
+    margin: 0;
+  `;
 
   if (product.original_price <= product.price) {
     saleContainer.style.display = "none";
+    price.style.color = "black";
   }
 
   const info = document.createElement("div");
@@ -155,7 +164,22 @@ function createProductCard(product, favorites) {
     `;
   info.append(saleContainer, price);
 
-  card.append(imgContainer, productName, info);
+  const cardButton = document.createElement("button");
+  cardButton.textContent = "Sepete Ekle";
+  cardButton.style.cssText = `
+      background: #f3940d;
+      margin-bottom: 10px;
+      color: white;
+      border: none;
+      padding: 8px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: bold;   `;
+  cardButton.onclick = () => {
+    window.open(product.url, "_blank");
+  };
+
+  card.append(imgContainer, productName, info, cardButton);
   return card;
 }
 
